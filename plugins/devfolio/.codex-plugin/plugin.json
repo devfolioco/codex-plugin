@@ -1,0 +1,46 @@
+{
+  "name": "devfolio",
+  "version": "0.1.0",
+  "description": "Prepare, validate, preview, and safely publish Devfolio hackathon submissions from Codex.",
+  "author": {
+    "name": "Ashwin",
+    "email": "ashwinexe@users.noreply.github.com",
+    "url": "https://github.com/ashwinexe"
+  },
+  "homepage": "https://github.com/devfolioco/devfolio-codex-plugin",
+  "repository": "https://github.com/devfolioco/devfolio-codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "devfolio",
+    "hackathon",
+    "submission",
+    "projects",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Devfolio",
+    "shortDescription": "Manage Devfolio projects from Codex",
+    "longDescription": "Connects Codex to Devfolio workflows. Without an MCP connection, Codex can help inspect public hackathons and prepare local submission drafts. With a Devfolio MCP URL, Codex can view active hackathons, fetch submission guides, manage project drafts, upload images, and safely create, update, or publish projects after confirmation.",
+    "developerName": "Devfolio",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Interactive"
+    ],
+    "websiteURL": "https://devfolio.co/",
+    "privacyPolicyURL": "https://github.com/devfolioco/devfolio-codex-plugin/blob/main/plugins/devfolio/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/devfolioco/devfolio-codex-plugin/blob/main/plugins/devfolio/TERMS.md",
+    "defaultPrompt": [
+      "Set up Devfolio MCP in Codex.",
+      "Show what Devfolio can do.",
+      "Prepare my Devfolio project submission.",
+      "Show my active Devfolio hackathons."
+    ],
+    "brandColor": "#3770FF",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  }
+}

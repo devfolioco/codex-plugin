@@ -1,0 +1,20 @@
+{
+  "name": "local-devfolio-plugins",
+  "interface": {
+    "displayName": "Local Devfolio Plugins"
+  },
+  "plugins": [
+    {
+      "name": "devfolio",
+      "source": {
+        "source": "local",
+        "path": "./plugins/devfolio"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

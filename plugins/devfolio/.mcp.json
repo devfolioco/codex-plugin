@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "devfolio": {
+      "type": "http",
+      "url": "https://mcp.devfolio.co/mcp",
+      "note": "Devfolio MCP hosted Streamable HTTP endpoint. Most account-specific tools require the user's unique MCP URL from Devfolio Account Settings -> MCP, usually added with: codex mcp add devfolio --url \"https://mcp.devfolio.co/mcp?apiKey=...\". Treat the URL like a password."
+    }
+  }
+}

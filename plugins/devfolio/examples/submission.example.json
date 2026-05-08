@@ -1,0 +1,36 @@
+{
+  "name": "Example Hack",
+  "tagline": "A concise one-line pitch for judges.",
+  "description": "Example Hack helps teams prepare polished Devfolio submissions with repeatable validation and preview checks.",
+  "problem": "Hackathon teams often miss required submission fields or discover broken links too late.",
+  "solution": "The project keeps submission data structured, validates important fields, and supports hackathon-specific preview endpoints.",
+  "challenges": "Balancing generic Devfolio guidance with hackathon-specific requirements.",
+  "technologies": [
+    "Codex",
+    "Python",
+    "Devfolio"
+  ],
+  "links": [
+    {
+      "type": "source",
+      "url": "https://github.com/devfolioco/devfolio-codex-plugin"
+    },
+    {
+      "type": "demo",
+      "url": "https://example.com"
+    }
+  ],
+  "videoDemo": "https://youtu.be/example",
+  "screenshots": [
+    "https://example.com/screenshot.png"
+  ],
+  "tracks": [
+    "Productivity"
+  ],
+  "submissionMetadata": {
+    "hackathon": "Example Hackathon",
+    "team": "Example Team",
+    "prizes": [],
+    "notes": "Replace this file with real project details before publishing."
+  }
+}
