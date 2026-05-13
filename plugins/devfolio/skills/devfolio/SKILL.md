@@ -1,46 +1,11 @@
 ---
 name: devfolio
-description: Work with Devfolio from Codex: prepare hackathon submissions, inspect Devfolio's multi-repo codebase, study MCP server capabilities, and safely use Devfolio project workflows.
+description: Work with Devfolio from Codex: prepare hackathon submissions, study MCP server capabilities, and safely use Devfolio project workflows.
 ---
 
 # Devfolio
 
-Use this skill when the user asks for Devfolio, `@devfolio`, Devfolio MCP, hackathon submissions, project drafts, sponsor tracks, Devfolio project JSON, publishing projects, or questions about the Devfolio multi-repo codebase.
-
-## Workspace Setup
-
-Devfolio repos should live under one parent directory. If `DEVFOLIO_WORKSPACE_PATH` is set, use that as the parent. Otherwise, infer it from nearby folders and tell the user what path you used.
-
-Expected repo names include:
-
-- `api-types` — shared TypeScript types for API request/response shapes
-- `datalayer` or `projectx` — DB operations and Sequelize/Postgres models
-- `devfolio-api` — public-facing Express/Node API server
-- `devfolio-backend` — infrastructure, Docker, Hasura migrations, local dev setup
-- `devfolio-frontend` — hacker-facing Devfolio app
-- `devfolio-mcp-server` or `mcp-server` — Devfolio MCP server
-- `organizer-dashboard` — legacy organizer dashboard
-- `od` — organizer dashboard v2
-- `source` — design system
-- `skills` or `devfolio-agent-skills` — internal Devfolio agent skills
-
-When answering a codebase question, stay in the current repo if it has the answer. Read sibling repos only when the answer crosses boundaries.
-
-## Repo Navigation
-
-For API route definitions, start in `devfolio-api/server/routers/<resource>.ts`.
-
-For business logic behind an API route, follow `devfolio-api/server/controllers/<resource>.ts` to `devfolio-api/server/services/<resource>.ts`.
-
-For persistence and DB models, inspect `projectx/src/models/<resource>.ts`, `projectx/src/controllers/<resource>.ts`, `datalayer`, and raw schema or migrations under `devfolio-backend`.
-
-For hacker-facing flows such as applications, microsites, judging, and project pages, inspect `devfolio-frontend/pages/`, GraphQL queries, mutations, and hooks.
-
-For legacy organizer behavior, inspect `organizer-dashboard/views/`, `organizer-dashboard/components/`, `organizer-dashboard/actions/`, `organizer-dashboard/queries/`, `organizer-dashboard/mutations/`, and `organizer-dashboard/api/`.
-
-For shared types, inspect `api-types/types/` and `api-types/composed/`.
-
-For design system components, inspect `source/src/components/<ComponentName>/`, `source/src/index.ts`, and `source/src/theme/index.ts`.
+Use this skill when the user asks for Devfolio, `@devfolio`, Devfolio MCP, hackathon submissions, project drafts, sponsor tracks, Devfolio project JSON, side projects, or publishing projects.
 
 ## MCP Server Setup
 
@@ -71,18 +36,7 @@ codex mcp add devfolio \
 
 Treat the MCP URL like a password. Never hardcode, print, or repeat the key. If a user pastes a real MCP URL into chat, avoid echoing it back and recommend revoking it if it was exposed somewhere public.
 
-For Devfolio engineers testing the server locally, run:
-
-
-```bash
-export DEVFOLIO_WORKSPACE_PATH="/Users/ashwinexe/Documents/GitHub/devfolio"
-export DEVFOLIO_API_BASE_URL="<devfolio-api-base-url>"
-plugins/devfolio/scripts/start-local-mcp.sh
-```
-
-The Devfolio MCP server also exposes legacy SSE at `http://localhost:3000/sse`, but Codex should prefer Streamable HTTP at `/mcp`.
-
-The MCP connection requires a Devfolio MCP API key. The server accepts it as `x-api-key` or `apiKey` at the MCP edge and forwards it to `devfolio-api` as `x-mcp-api-key`. Never hardcode or print this key.
+The MCP connection requires a Devfolio MCP API key. The server accepts it as `x-api-key` or `apiKey` at the MCP edge and forwards it to Devfolio as an MCP API key. Never hardcode or print this key.
 
 ## First-Run and Disconnected Experience
 
@@ -91,14 +45,12 @@ When the user invokes `@devfolio` without a concrete task, asks what the plugin 
 Use this shape:
 
 - Welcome them to Devfolio for Codex.
-- Explain that without a Devfolio MCP connection, Codex can still inspect public Devfolio hackathon pages, read local project repos, draft/validate submission JSON, prepare project copy, and explain setup.
+- Explain that without a Devfolio MCP connection, Codex can still draft/validate submission JSON, prepare project copy, and explain setup.
 - Explain that with a Devfolio MCP connection, Codex can view their active hackathons, fetch their current hackathon project, inspect tracks/prizes, fetch submission guides and custom field requirements, get signed upload URLs, create/update side projects, create/update hackathon project drafts, and publish only after explicit confirmation.
 - Tell them to connect by opening Devfolio Account Settings, joining Devfolio Beta if needed, opening the MCP tab, generating/copying the unique MCP URL, and running the Codex command shown by Devfolio: `codex mcp add devfolio --url "https://mcp.devfolio.co/mcp?apiKey=..."`.
 - If that command reports that `devfolio` already exists, tell them to run `codex mcp remove devfolio` and then re-run the Devfolio-provided `codex mcp add` command.
 - Warn that the MCP URL is sensitive like a password and should be revoked if exposed.
 - Offer the next useful action, such as "I can help draft a submission offline now, or you can connect MCP and ask me to show your active hackathons."
-
-If the error says a local MCP server is not running, explain that local MCP is only for Devfolio engineering/development. For normal plugin use, the user should connect the hosted Devfolio MCP URL from Account Settings.
 
 Do not claim the user is logged in unless an MCP resource/tool confirms it in the current session.
 
@@ -106,7 +58,6 @@ Do not claim the user is logged in unless an MCP resource/tool confirms it in th
 
 Read/setup tools:
 
-- `getUserActiveHackathons` — list hackathons the signed-in user is currently participating in; call first when a hackathon slug is unknown.
 - `getMyHackathonProject` — fetch the user's project for a hackathon, including drafts, team info, custom fields, and answers.
 - `getHackathonTracksAndPrizes` — fetch tracks and nested prizes for a hackathon; use returned track UUIDs for applications.
 - `getUserPublicProjects` — list/search public profile projects.
@@ -133,17 +84,15 @@ Prompts:
 - `update-side-project`
 - `devfolio-overview`
 
-## MCP Workflow
+## Compatibility Rules
 
-When the user asks to build, review, or update Devfolio MCP support:
+Keep future Devfolio MCP and plugin capabilities additive:
 
-1. Locate the MCP server repo at `$DEVFOLIO_WORKSPACE_PATH/devfolio-mcp-server`, `$DEVFOLIO_WORKSPACE_PATH/mcp-server`, or a nearby MCP server directory.
-2. Read its README, package manifest, server entrypoint, tool registration files, and auth/config docs before proposing plugin config.
-3. Identify the MCP transport type: stdio, SSE, or streamable HTTP.
-4. List the exposed MCP tools, their input schemas, side effects, required auth, and whether each tool is read-only or mutating.
-5. Treat create, update, submit, publish, delete, transfer, invite, payout, and auth/session actions as confirmation-required unless the server docs say otherwise.
-6. Do not hardcode secrets. Source tokens from documented environment variables or a user-approved session.
-7. When packaging as a Codex plugin, prefer `.mcp.json` for MCP server configuration plus Devfolio workflow skills for multi-step behavior.
+- Preserve offline drafting, validation, and setup guidance for users who have not connected MCP.
+- Preserve existing tool names and argument meanings. Prefer optional arguments or new tools for new capabilities.
+- Keep account sign-in outside the public plugin package; users should connect their own Devfolio MCP URL.
+- Treat team support as authorization-sensitive. When a tool exposes team or role data, read it before mutating a project and summarize the target team before confirmation.
+- Preserve draft-first create/update flows and explicit publish confirmation.
 
 ## Safety Rules
 
@@ -191,7 +140,7 @@ Use this workflow for project submission tasks:
    - Treat missing public repo, broken deployment, absent demo video, and missing screenshots as warnings unless the hackathon rules make them required.
 
 4. Use MCP draft flow when available.
-   - Call `getUserActiveHackathons` if the hackathon slug is unknown.
+   - Read `devfolio://user/active-hackathons` if the hackathon slug is unknown.
    - Call `getHackathonTracksAndPrizes` if applying to tracks.
    - Call `getSignedUploadUrl` for gallery images or image-type custom fields, upload bytes, then use the returned `filePath`.
    - Prefer draft status first. Publish only after explicit confirmation.

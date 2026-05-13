@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "description": "Prepare, validate, preview, and safely publish Devfolio hackathon submissions from Codex.",
   "author": {
-    "name": "Ashwin",
-    "email": "ashwinexe@users.noreply.github.com",
-    "url": "https://github.com/ashwinexe"
+    "name": "Devfolio",
+    "url": "https://devfolio.co/"
   },
   "homepage": "https://github.com/devfolioco/devfolio-codex-plugin",
   "repository": "https://github.com/devfolioco/devfolio-codex-plugin",

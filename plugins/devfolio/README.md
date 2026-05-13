@@ -1,24 +1,13 @@
 # Devfolio Codex Plugin
 
-This plugin helps Codex work with Devfolio from local repositories and the Devfolio MCP server. It supports hackathon project submissions, profile side projects, active hackathon discovery, track/prize lookup, upload URL generation, and Devfolio codebase navigation.
+This plugin helps Codex work with Devfolio through the Devfolio MCP server. It supports hackathon project submissions, profile side projects, active hackathon discovery, track/prize lookup, and upload URL generation.
 
 It bundles:
 
 - A `devfolio` skill for drafting, validating, and safely publishing project submissions.
 - `./.mcp.json` pointing Codex at the hosted Devfolio Streamable HTTP MCP server.
-- Devfolio multi-repo navigation guidance adapted from the internal `devfolioco/skills` repository.
-- MCP workflow guidance for the tools exposed by `devfolioco/devfolio-mcp-server`.
+- MCP workflow guidance for Devfolio project and submission tools.
 - A small `devfolio_submission.py` helper for generating a submission template, validating required fields, and printing a summary.
-
-## Devfolio Workspace
-
-For codebase or MCP work, keep Devfolio repos under one parent directory and point Codex at it:
-
-```bash
-export DEVFOLIO_WORKSPACE_PATH="/Users/ashwinexe/Documents/GitHub/devfolio"
-```
-
-The plugin expects repos such as `devfolio-agent-skills`, `devfolio-mcp-server`, `devfolio-api`, `devfolio-backend`, `devfolio-frontend`, `api-types`, `projectx`, and `organizer-dashboard` to live under that parent.
 
 ## MCP Server
 
@@ -52,19 +41,10 @@ codex mcp add devfolio \
 
 Treat this URL like a password. Anyone with it can act on the user's Devfolio account. Revoke it in Devfolio if it is exposed.
 
-For Devfolio engineers testing the MCP server locally, run:
-
-```bash
-export DEVFOLIO_WORKSPACE_PATH="/Users/ashwinexe/Documents/GitHub/devfolio"
-export DEVFOLIO_API_BASE_URL="<devfolio-api-base-url>"
-plugins/devfolio/scripts/start-local-mcp.sh
-```
-
-The hosted and local servers require a Devfolio MCP API key at connection time. The MCP edge accepts `x-api-key` or `apiKey` and forwards it to Devfolio API as `x-mcp-api-key`.
+The hosted server requires a Devfolio MCP API key at connection time. The MCP edge accepts `x-api-key` or `apiKey` and forwards it to Devfolio API as `x-mcp-api-key`.
 
 Current MCP tools include:
 
-- `getUserActiveHackathons`
 - `getMyHackathonProject`
 - `getHackathonTracksAndPrizes`
 - `getUserPublicProjects`
@@ -74,6 +54,11 @@ Current MCP tools include:
 - `updateHackathonProject`
 - `createSideProject`
 - `updateSideProject`
+
+Current MCP resources include:
+
+- `devfolio://user/profile`
+- `devfolio://user/active-hackathons`
 
 ## Local Usage
 
@@ -92,3 +77,13 @@ python3 plugins/devfolio/scripts/devfolio_submission.py validate devfolio-submis
 ## Safety
 
 Devfolio project publishing can make a project public immediately. The skill instructs Codex to require explicit confirmation before all create/update calls and before any `status: "publish"` action.
+
+## Compatibility Notes
+
+Future support for sign-in, teams, richer media, or organizer-specific workflows should be additive:
+
+- Keep local drafting and validation usable without an MCP connection.
+- Keep the hosted MCP URL as the normal public setup path.
+- Add optional arguments or new tools before changing existing tool behavior.
+- Read the current project/team state before mutating team-owned projects when the MCP server exposes that data.
+- Preserve explicit confirmation before create, update, publish, transfer, invite, or other externally visible actions.
