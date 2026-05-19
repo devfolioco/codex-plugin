@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "devfolio": {
+      "type": "http",
+      "url": "https://mcp.devfolio.co/mcp",
+      "note": "Devfolio MCP hosted Streamable HTTP endpoint. Codex should connect with this bare URL and complete Devfolio OAuth during setup. Legacy apiKey query parameter URLs are no longer valid for production."
+    }
+  }
+}
