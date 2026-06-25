@@ -1,6 +1,6 @@
 ---
 name: devfolio
-description: Work with Devfolio from Codex: prepare hackathon submissions, study MCP server capabilities, and safely use Devfolio project workflows.
+description: "Work with Devfolio from Codex: prepare hackathon submissions, study MCP server capabilities, and safely use Devfolio project workflows."
 ---
 
 # Devfolio
