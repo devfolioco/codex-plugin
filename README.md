@@ -59,7 +59,15 @@ codex mcp add devfolio \
   --url "https://mcp.devfolio.co/mcp"
 ```
 
-Codex should open the Devfolio OAuth flow during setup. If Codex says an MCP server named `devfolio` already exists, remove the existing entry and add it again:
+Devfolio MCP uses OAuth. Codex should open a Devfolio consent screen during setup, where you can authorize Codex to read your Devfolio identity, profile, hackathon participation, and projects, plus manage projects when you ask Codex to create or update them.
+
+After authorizing, start a new Codex thread and invoke the plugin:
+
+```text
+@devfolio show my active hackathons
+```
+
+If Codex says an MCP server named `devfolio` already exists, remove the existing entry and add it again:
 
 ```bash
 codex mcp remove devfolio
@@ -75,6 +83,15 @@ codex mcp add devfolio \
 ```
 
 Legacy MCP URLs with `apiKey` query parameters are no longer valid for production. Remove the key from any existing Devfolio MCP config and reconnect with the bare MCP URL.
+
+### OAuth Flow
+
+1. Install the plugin from the Devfolio marketplace.
+2. Connect the hosted MCP server with `codex mcp add devfolio --url "https://mcp.devfolio.co/mcp"`.
+3. Complete the Devfolio consent screen when Codex opens it.
+4. Start a new Codex thread and use `@devfolio`.
+
+The OAuth connection lets Codex call Devfolio MCP tools on your behalf. The plugin still requires explicit confirmation before create, update, upload, or publish actions.
 
 ## Safety
 
